@@ -1,21 +1,139 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Du sable à l’IA</title>
-  <style>
-    body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #faf6ee; color: #242424; font-family: system-ui, sans-serif; }
-    main { padding: 2rem; text-align: center; }
-    h1 { font-size: clamp(2.5rem, 8vw, 5rem); margin-bottom: 1rem; }
-    p { font-size: 1.2rem; line-height: 1.6; }
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Découvrez l’algèbre de Boole en manipulant des interrupteurs : ET, OU, NON et une lampe automatique. Une initiation visuelle à l’informatique.">
+<title>L’algèbre de Boole — Du sable à l’IA</title>
+<style>
+:root{color-scheme:light;--background:#faf6ee;--foreground:#242424;--muted:#eee9df;--border:#b9b4aa;--viz-series-1:#96700e;--primary:#242424;--primary-foreground:#fff;--ring:#815c00}
+*{box-sizing:border-box}body{margin:0;background:var(--background);color:var(--foreground);font:17px/1.65 system-ui,sans-serif}header,main,footer{max-width:850px;margin:auto;padding:24px}header{border-bottom:1px solid #ded8ce;display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between}header a{color:inherit;text-decoration:none;font-weight:700}header span,.eyebrow{color:#665e50;font-size:.85rem}.eyebrow{text-transform:uppercase;letter-spacing:.1em;margin-top:38px}h1{font-size:clamp(2rem,6vw,3.4rem);line-height:1.12;letter-spacing:-.035em;margin:14px 0 24px}h2{font-size:1.45rem;line-height:1.3}p{max-width:68ch}strong{font-weight:650}.intro{font-size:1.15rem}section{margin:44px 0}a{color:#745300}button,input,select{font:inherit}button,select,input{cursor:pointer}a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #815c00;outline-offset:4px}.lab{background:#fffcf6;border:1px solid #ded8ce;border-radius:20px;padding:24px;scroll-margin-top:20px}.viz-controls,.viz-row{display:flex;flex-wrap:wrap;align-items:center;gap:12px}.form-label{display:flex;flex-wrap:wrap;align-items:center;gap:12px;width:100%}.form-select{max-width:100%;min-height:44px;border:1px solid var(--border);border-radius:8px;padding:8px 12px;background:var(--background);color:var(--foreground)}.form-check{display:inline-flex;align-items:center;gap:10px;min-height:48px;cursor:pointer}.form-check-input{appearance:none;position:relative;margin:0;width:46px;height:28px;border-radius:20px;background:#ddd7cb;border:1px solid #8c857a;flex-shrink:0;transition:background .2s}.form-check-input:before{content:"";position:absolute;width:20px;height:20px;top:3px;left:3px;background:#fff;border-radius:50%;box-shadow:0 1px 3px #0003;transition:transform .2s}.form-check-input:checked{background:#96700e}.form-check-input:checked:before{transform:translateX(18px)}#lesson-text{min-height:100px}.challenge{font-size:.95rem;border-left:3px solid #c8a54e;padding-left:14px}.bulb-symbol{font-size:2rem;line-height:1}.person-symbol{font-size:1.2rem;line-height:1}#bool-demo:not(.lit) .bulb-symbol{filter:grayscale(1);opacity:.55}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;text-align:center;font-variant-numeric:tabular-nums}th,td{padding:12px 6px;border-bottom:1px solid #ded8ce}th{font-size:.9rem}summary{cursor:pointer;font-weight:650;padding:12px 0}footer{font-size:.9rem;border-top:1px solid #ded8ce;color:#665e50}.small{font-size:.9rem;color:#665e50}[hidden]{display:none!important}@media(max-width:480px){header,main,footer{padding:18px}.lab{padding:16px}.form-select{width:100%}#lesson-text{min-height:0}}@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
 <body>
-  <main>
-    <h1>Hello world !</h1>
-    <p>Du sable à l’IA</p>
-    <p>Comprendre l’informatique, une animation à la fois.</p>
-  </main>
-</body>
-</html>
+<header><a href="./">Du sable à l’IA</a><span>Comprendre, une animation à la fois.</span></header>
+<main>
+<p class="eyebrow">Les bases · Logique</p>
+<h1>Comment un ordinateur prend une décision ?</h1>
+<p class="intro">Une lampe, des interrupteurs et trois règles simples : découvrez l’algèbre de Boole du bout des doigts.</p>
+<section aria-labelledby="two-values"><h2 id="two-values">Deux possibilités, c’est tout</h2>
+<p>Une porte est-elle ouverte ? Un bouton est-il enfoncé ? Un mot de passe est-il correct ? Pour chacune de ces questions, on ne retient que deux réponses : <strong>vrai</strong> ou <strong>faux</strong>.</p>
+<p>L’algèbre de Boole permet de combiner ces réponses pour répondre à des questions plus complexes. On représente souvent <strong>faux par 0</strong> et <strong>vrai par 1</strong>. Ici, une lampe éteinte représente faux ; une lampe allumée représente vrai.</p></section>
+<section class="lab" aria-labelledby="lab-title"><h2 id="lab-title">À vous de jouer</h2><p>Choisissez une règle, puis actionnez les interrupteurs.</p>
+<div id="bool-demo">
+  <div class="viz-controls">
+    <label class="form-label">Animation
+      <select class="form-select" id="bool-mode">
+        <option value="direct" selected>Un interrupteur</option>
+        <option value="and">ET — les deux</option>
+        <option value="or">OU — au moins un</option>
+        <option value="not">NON — l’inverse</option>
+        <option value="room">La lampe automatique</option>
+      </select>
+    </label>
+  </div>
+  <div id="lesson-text"></div><div id="bool-inputs" class="viz-controls"></div>
+  <div id="bool-circuit" aria-label="Circuit logique"></div>
+  <div id="bool-room" hidden>
+    <div class="room-scene" role="img" aria-label="Pièce avec une fenêtre, une personne et une lampe">
+      <div class="window"><span id="bool-sky"></span></div>
+      <div class="ceiling-wire"></div><div class="shade"></div><div class="light-cone"></div>
+      <div class="person"><span class="person-symbol" aria-hidden="true">🧍</span></div>
+      <div class="floor"></div>
+    </div>
+  </div>
+  <div class="viz-row bool-output" aria-live="polite">
+    <span class="bulb"><span class="bulb-symbol" aria-hidden="true">💡</span></span>
+    <span id="bool-result"></span>
+  </div>
+</div>
+<style>
+#bool-demo {color:var(--foreground)}
+#bool-demo #bool-inputs {margin-top:20px;gap:16px}
+#bool-demo #bool-circuit {margin-top:8px}
+#bool-demo .circuit {display:block;width:100%;height:190px;overflow:visible}
+#bool-demo .circuit text {fill:var(--foreground);font-family:inherit}
+#bool-demo .trace {fill:none;stroke:var(--border);stroke-width:2;transition:stroke .2s}
+#bool-demo .trace.on {stroke:var(--viz-series-1)}
+#bool-demo .gate {fill:var(--muted);stroke:var(--border);stroke-width:1}
+#bool-demo .signal {fill:var(--viz-series-1)}
+#bool-demo .bulb {display:flex;padding:16px;border-radius:50%;background:var(--muted);transition:background .2s,box-shadow .2s}
+#bool-demo.lit .bulb {color:var(--viz-series-1);background:color-mix(in srgb,var(--viz-series-1) 18%,transparent);box-shadow:0 0 28px color-mix(in srgb,var(--viz-series-1) 25%,transparent)}
+#bool-demo .bool-output {margin-top:12px;justify-content:center}
+#bool-demo .room-scene {height:170px;position:relative;overflow:hidden;background:var(--muted);margin-top:8px}
+#bool-demo .window {position:absolute;left:12%;top:24px;width:62px;height:65px;border:2px solid var(--foreground);display:grid;place-items:center}
+#bool-demo .ceiling-wire {position:absolute;left:65%;top:0;height:24px;border-left:2px solid var(--foreground)}
+#bool-demo .shade {position:absolute;left:calc(65% - 23px);top:24px;width:46px;height:22px;background:var(--foreground);border-radius:28px 28px 0 0}
+#bool-demo .light-cone {position:absolute;left:calc(65% - 80px);top:46px;width:160px;height:112px;clip-path:polygon(36% 0,64% 0,100% 100%,0 100%);background:var(--viz-series-1);opacity:0;transition:opacity .25s}
+#bool-demo.lit .light-cone {opacity:.23}
+#bool-demo .person {position:absolute;left:38%;bottom:12px;transform:scale(2.5);transform-origin:bottom center;transition:opacity .25s,translate .25s}
+#bool-demo .floor {position:absolute;left:0;right:0;bottom:10px;border-top:1px solid var(--border)}
+@media(prefers-reduced-motion:reduce){#bool-demo * {transition:none!important}}
+</style>
+<script>
+(() => {
+const root=document.getElementById('bool-demo');
+const mode=root.querySelector('#bool-mode'), inputs=root.querySelector('#bool-inputs'), circuit=root.querySelector('#bool-circuit');
+const state={a:false,b:false,night:true,present:true,sleep:true};
+const ns='http://www.w3.org/2000/svg';
+const result=()=> mode.value==='and'?state.a&&state.b:mode.value==='or'?state.a||state.b:mode.value==='not'?!state.a:mode.value==='room'?state.night&&state.present&&!state.sleep:state.a;
+const lessons = {
+ direct: ['Une information, deux valeurs', 'Activez l’interrupteur : sa valeur passe de 0 à 1 et la lampe s’allume.', 'Essayez les deux positions.'],
+ and: ['ET : il faut les deux', 'J’ai un billet ET le billet est valide : je peux entrer. Si une seule des deux conditions est fausse, le résultat est faux.', 'Défi : arrivez à allumer la lampe.'],
+ or: ['OU : un seul suffit', 'J’ai un billet OU une invitation : je peux entrer. Si j’ai les deux, je peux entrer aussi ! Le OU logique inclut le cas où les deux conditions sont vraies.', 'Défi : trouvez les trois façons d’allumer la lampe.'],
+ not: ['NON : on inverse la réponse', 'NON vrai donne faux. NON faux donne vrai. Ici, l’interrupteur représente une information : il ne coupe pas l’alimentation électrique du montage.', 'Essayez d’éteindre la lampe en activant l’interrupteur.'],
+ room: ['Une vraie petite décision', 'La lampe s’allume quand il fait nuit ET qu’une personne est présente ET que le mode veille est désactivé. La règle : nuit ET présence ET NON veille.', 'Défi : il fait nuit, quelqu’un est là, mais la lampe reste éteinte. Pourquoi ?']
+};
+function controls(){
+ const lesson=root.querySelector('#lesson-text');lesson.replaceChildren();
+ const [title,body,challenge]=lessons[mode.value];
+ const heading=document.createElement('h3');heading.textContent=title;
+ const para=document.createElement('p');para.textContent=body;
+ const hint=document.createElement('p');hint.className='challenge';hint.textContent=challenge;
+ lesson.append(heading,para,hint);
+ inputs.replaceChildren();
+ const fields=mode.value==='room'?[['night','Nuit'],['present','Présence'],['sleep','Mode veille']]:[['a','A'],...(mode.value==='and'||mode.value==='or'?[['b','B']]:[])];
+ fields.forEach(([key,label])=>{
+  const wrap=document.createElement('label');wrap.className='form-check form-switch';
+  const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.className='form-check-input';checkbox.checked=state[key];
+  const text=document.createElement('span');text.className='form-check-label';text.textContent=label;
+  checkbox.addEventListener('change',()=>{state[key]=checkbox.checked;draw(true)});wrap.append(checkbox,text);inputs.append(wrap);
+ });
+ draw(false);
+}
+function draw(animate){
+ const w=Math.max(280,circuit.clientWidth), out=result(), room=mode.value==='room';
+ root.classList.toggle('lit',out);root.querySelector('#bool-room').hidden=!room;
+ root.querySelector('#bool-result').textContent=(out?'1 — vrai · Lampe allumée':'0 — faux · Lampe éteinte');
+ root.querySelector('#bool-sky').textContent=state.night?'Nuit':'Jour';
+ const person=root.querySelector('.person');person.style.opacity=state.present?'1':'0';person.style.translate=state.present?'0':'-24px';
+ const s=document.createElementNS(ns,'svg');s.classList.add('circuit');s.setAttribute('viewBox',`0 0 ${w} 190`);s.setAttribute('role','img');s.setAttribute('aria-label',room?'Nuit et présence et non veille':`Opération ${mode.options[mode.selectedIndex].text}`);
+ function el(tag,attrs,text){const e=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));if(text!==undefined)e.textContent=text;s.append(e);return e}
+ function label(x,y,text){el('text',{x,y,'text-anchor':'middle','dominant-baseline':'middle'},text)}
+ function wire(d,on){el('path',{d,class:'trace'+(on?' on':'')});if(on&&animate&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const c=el('circle',{r:4,class:'signal'});const m=document.createElementNS(ns,'animateMotion');m.setAttribute('path',d);m.setAttribute('dur','.45s');m.setAttribute('repeatCount','1');m.setAttribute('fill','freeze');c.append(m);}}
+ function gate(x,y,name,width=54){el('rect',{x:x-width/2,y:y-21,width,height:42,rx:8,class:'gate'});label(x,y,name)}
+ const gx=w*.57, end=w-36;
+ if(room){
+  const left=42, nx=w*.33;
+  [[40,'Nuit',state.night],[90,'Présence',state.present],[150,'Veille',state.sleep]].forEach(([y,n,v])=>{label(left,y-17,n);label(left,y+3,Number(v));});
+  wire(`M ${left+25} 40 H ${gx-28}`,state.night);wire(`M ${left+25} 90 H ${gx-28}`,state.present);
+  wire(`M ${left+25} 150 H ${nx-28}`,state.sleep);gate(nx,150,'NON');wire(`M ${nx+28} 150 H ${gx-28}`,!state.sleep);label((nx+gx)/2,174,Number(!state.sleep));
+  el('rect',{x:gx-27,y:20,width:54,height:151,rx:8,class:'gate'});label(gx,94,'ET');wire(`M ${gx+28} 94 H ${end}`,out);label(end,74,Number(out));
+ }else{
+  const two=mode.value==='and'||mode.value==='or', ys=two?[52,138]:[95];
+  ys.forEach((y,i)=>{const v=i?state.b:state.a;label(35,y-22,i?'B':'A');label(35,y+2,Number(v));wire(`M 58 ${y} H ${gx-56} V ${95+(two?(i?10:-10):0)} H ${gx-28}`,v)});
+  const name={direct:'=',and:'ET',or:'OU',not:'NON'}[mode.value];gate(gx,95,name);wire(`M ${gx+28} 95 H ${end}`,out);label(end,72,Number(out));
+ }
+ circuit.replaceChildren(s);
+}
+mode.addEventListener('change',controls);controls();
+new ResizeObserver(()=>draw(false)).observe(circuit);
+})();
+</script>
+
+</section>
+<section><h2>Toutes les possibilités</h2><p>Une <strong>table de vérité</strong> montre le résultat pour chaque combinaison d’entrées. Ici, 0 signifie faux et 1 signifie vrai.</p>
+<details><summary>Afficher les tables de vérité</summary><div class="table-wrap"><table><caption>Les règles ET et OU</caption><thead><tr><th>A</th><th>B</th><th>A ET B</th><th>A OU B</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td>0</td><td>1</td><td>0</td><td>1</td></tr><tr><td>1</td><td>0</td><td>0</td><td>1</td></tr><tr><td>1</td><td>1</td><td>1</td><td>1</td></tr></tbody></table><table><caption>La règle NON</caption><thead><tr><th>A</th><th>NON A</th></tr></thead><tbody><tr><td>0</td><td>1</td></tr><tr><td>1</td><td>0</td></tr></tbody></table></div></details></section>
+<section><h2>Et dans un ordinateur ?</h2><p>Dans les processeurs, des circuits électroniques appelés <strong>portes logiques</strong> réalisent ces opérations sur des signaux représentant des 0 et des 1. En combinant beaucoup de ces portes, on peut notamment construire des circuits qui calculent et comparent des nombres.</p><p class="small">Les traits de cette animation représentent des liens logiques. Les points animés servent à suivre les valeurs : ce n’est pas une simulation du déplacement des électrons ni du temps de réponse d’un circuit.</p></section>
+</main><footer>Du sable à l’IA · Comprendre l’informatique par la manipulation.</footer>
+</body></html>
